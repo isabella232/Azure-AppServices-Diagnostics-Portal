@@ -54,7 +54,7 @@ export class CxpChatLauncherComponent implements OnInit {
     this.chatWelcomeMessage = `A support request has been created. You can view the case <strong><a role="link" aria-label="Click to view your support requests" title="Support requests." style='color:skyblue' target = '_blank' href='${portalUrl}/#blade/Microsoft_Azure_Support/HelpAndSupportBlade/managesupportrequest'>here</a></strong>.
 
 
-In case chat did not start in a pop up window, disable your pop up blocker and click <strong><a role="link" aria-label="Click to launch chat popup" title="Launch chat popup."  style='color:skyblue' href="javascript:window.open('${this.completeChatUrl}', 'AzureSupportCaseChat', '${this.windowFeatures}');">here</a></strong> to launch chat again.`;
+In case chat did not start in a pop up window, disable your pop up blocker and click <strong><a role="link" aria-label="Click to launch chat pop up" title="Launch chat pop up."  style='color:skyblue' href="javascript:window.open('${this.completeChatUrl}', 'AzureSupportCaseChat', '${this.windowFeatures}');">here</a></strong> to launch chat again.`;
   }
 
   public isComponentInitialized(): boolean {
