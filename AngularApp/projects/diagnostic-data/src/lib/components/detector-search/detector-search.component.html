@@ -1,7 +1,7 @@
 <div inViewport [inViewportOptions]="{ threshold: [0.3, 0.7] }" (inViewportAction)="listenVisibility($event)" role="search">
 <div *ngIf="showSearchBar && (searchConfiguration.DetectorSearchEnabled || searchConfiguration.WebSearchEnabled)">
     <div style="display:block;margin-bottom:10px;margin-top:10px;" tabindex="0">
-        <span class="span-h1">Didn’t find what you’re looking for? Tell us about your problem below, and we may be able to provide some additional diagnostics:</span>
+        <span class="span-h1">Didn't find a solution? Give us more details and we'll recommend diagnostics & docs:</span>
     </div>
     <div style="margin-left:20px;">
         <div class="input-group input-group-sm search-input-group" *ngIf="!searchConfiguration.DetectorSearchEnabled || detectorId == ''">
