@@ -315,6 +315,15 @@
             "versionPrefix": "", 
             "pesId": "16469",  
             "azureCommImpactedServicesList": "Azure NetApp Files"  
+        },
+        { 
+            "service": "ResourceService",  
+            "resourceType": "Microsoft.Compute/virtualMachines",  
+            "templateFileName": "VirtualMachines",  
+            "imgSrc": "assets/img/Icon-compute-21-Virtual-Machine.svg",  
+            "versionPrefix": "", 
+            "pesId": "14749",  
+            "azureCommImpactedServicesList": "Azure Virtual Machines"  
         }
     ]
 }
