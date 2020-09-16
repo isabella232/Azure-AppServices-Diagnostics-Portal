@@ -2,8 +2,16 @@
   [isLightDismiss]="true" [hasCloseButton]="true" [closeButtonAriaLabel]="'close'" (onDismissed)="dismissedHandler()">
   <div>
     <div [ngStyle]="{'display':submitted === false ? 'block': 'none'}">
-      <h3>Send us feedback</h3>
-      <p>Thank you for taking the time to give us feedback</p>
+      <div *ngIf="feedbacks.length > 0">
+        <h3>Feedback History</h3>
+        <div *ngFor="let feedback of feedbacks">
+          <div [ngClass]="{'message-sent-by-system-genie' : feedback.author==='engineer','message-sent-by-user-genie' : feedback.author==='customer'}" [innerHtml]="feedback.comment"></div>
+        </div>
+      </div>
+      <!-- <div>
+        <h3>Send us feedback</h3>
+        <p>Thank you for taking the time to give us feedback</p>
+      </div> -->
       <div style="display:inline-flex">
         <svg class="svg-icon" viewBox="0 0 6 6" role="presentation" focusable="false"
           xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="6px" height="6px">
