@@ -1,9 +1,9 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { PanelType } from 'office-ui-fabric-react';
-import { TelemetryService, TelemetryEventNames, ResourceDescriptor } from 'diagnostic-data';
+import { TelemetryService, TelemetryEventNames } from 'diagnostic-data';
 import { Globals } from '../../../globals';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ResourceService } from '../../../shared-v2/services/resource.service';
 
 @Component({
   selector: 'fabric-feedback',
@@ -42,13 +42,8 @@ export class FabricFeedbackComponent implements AfterViewInit {
   rating: number = 0;
   feedbacks: Feedback[] = [];
   resourceUri: string = "";
-  constructor(protected telemetryService: TelemetryService, public globals: Globals, private _http: HttpClient, private router: ActivatedRoute) {
-    // const resource = ResourceDescriptor.parseResourceUri(window.location.href);
-    const subscriptionid = this.router.snapshot.params["subscriptionid"];
-    const resourcegroup = this.router.snapshot.params["resourcegroup"];
-    const resourcename = this.router.snapshot.params["resourcename"];
-    this.resourceUri = `/subscriptions/${subscriptionid}/resourceGroups/${resourcegroup}/providers/Microsoft.Web/sites/${resourcename}`;
-    this.resourceUri = this.resourceUri.toLowerCase();
+  constructor(protected telemetryService: TelemetryService, public globals: Globals, private _http: HttpClient, private resourceService: ResourceService) {
+    this.resourceUri = this.resourceService.resourceIdForRouting;
     this.getFeedbacks().subscribe(feedbacks => {
       this.feedbacks = feedbacks;
     })
@@ -125,14 +120,14 @@ export class FabricFeedbackComponent implements AfterViewInit {
     if (comment === "") return;
 
     const baseUrl = "https://xiaoxu-func.azurewebsites.net/api/AddComment";
-    let resourceuri = "/subscriptions/1402be24-4f35-4ab7-a212-2cd496ebdf14/resourceGroups/Default-Web-WestUS/providers/Microsoft.Web/sites/addingeventlogs";
-    resourceuri.toLowerCase();
-    const data = {
+    const data: Feedback = {
       comment: comment,
       author: "customer",
-      resourceuri: this.resourceUri
+      resourceuri: this.resourceUri,
+      detectorId: this.globals.getDetectorName(),
+      url: window.location.href
     }
-    this._http.post(baseUrl, {}, { params: data }).subscribe(res => { });
+    this._http.post(baseUrl, {}, { params: <any>data }).subscribe(res => { });
   }
 }
 
@@ -140,4 +135,6 @@ interface Feedback {
   comment: string;
   author: string;
   resourceuri?: string;
+  url?: string;
+  detectorId?: string
 }
