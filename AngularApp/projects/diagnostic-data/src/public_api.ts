@@ -5,6 +5,7 @@
 export * from './lib/services/diagnostic.service';
 export * from './lib/services/generic-support-topic.service';
 export * from './lib/services/generic-content.service';
+export * from './lib/services/generic-documents-search.service';
 export * from './lib/services/generic-resource-service';
 export * from './lib/services/comms.service';
 export * from './lib/services/cxp-chat.service';
@@ -35,5 +36,6 @@ export * from './lib/models/compiler-response';
 export * from './lib/models/compilation-properties';
 export * from './lib/models/solution-type-tag';
 export * from './lib/models/resource-descriptor';
+export * from './lib/models/documents-search-models';
 
 export * from './lib/components/detector-list-analysis/detector-list-analysis.component'

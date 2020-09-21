@@ -10,19 +10,24 @@ import { GenericContentService } from '../../services/generic-content.service';
 import { of, Observable } from 'rxjs';
 import { ISubscription } from "rxjs/Subscription";
 import { WebSearchConfiguration } from '../../models/search';
+
 @Component({
     selector: 'web-search',
     templateUrl: './web-search.component.html',
     styleUrls: ['./web-search.component.scss']
 })
+
 export class WebSearchComponent extends DataRenderBaseComponent implements OnInit {
     isPublic: boolean = false;
+    viewRemainingArticles : boolean = false;
     @Input() searchTerm: string = '';
     @Input() searchId: string = '';
     @Input() isChildComponent: boolean = true;
     @Input('webSearchConfig') webSearchConfig: WebSearchConfiguration = new WebSearchConfiguration();
     @Input() searchResults: any[] = [];
+    @Input() numArticlesExpanded : number = 2;
     @Output() searchResultsChange: EventEmitter<any[]> = new EventEmitter<any[]>();
+
     searchTermDisplay: string = '';
     showSearchTermPractices: boolean = false;
     showPreLoader: boolean = false;
@@ -81,7 +86,10 @@ export class WebSearchComponent extends DataRenderBaseComponent implements OnIni
             );
         }
         this.resetGlobals();
-        if (!this.isChildComponent) this.searchId = uuid();
+        if (!this.isChildComponent || !this.searchId || this.searchId.length <1 ) 
+            this.searchId = uuid();
+        
+    
         let searchTask = this._contentService.searchWeb(this.searchTerm, this.webSearchConfig.MaxResults.toString(), this.webSearchConfig.UseStack, this.webSearchConfig.PreferredSites).pipe(map((res) => res), retryWhen(errors => {
             let numRetries = 0;
             return errors.pipe(delay(1000), map(err => {
@@ -140,4 +148,25 @@ export class WebSearchComponent extends DataRenderBaseComponent implements OnIni
         this.showSearchTermPractices = false;
         this.searchTermDisplay = "";
     }
-}
+
+    viewOrHideAnchorTagText(viewRemainingArticles: boolean , 
+                            totalDocuments : number,
+                            numDocumentsExpanded : number){
+    
+        let remainingDocuments: string = "";
+        if (totalDocuments && numDocumentsExpanded){
+        remainingDocuments = `${totalDocuments - numDocumentsExpanded}`;
+        remainingDocuments = viewRemainingArticles ?  `last ${remainingDocuments} ` : remainingDocuments
+        }
+    
+        return !viewRemainingArticles ? `View ${remainingDocuments} more documents` : 
+                        `Hide ${remainingDocuments} documents`;
+    
+     }
+    
+
+    showRemainingArticles(){
+        this.viewRemainingArticles =!this.viewRemainingArticles
+      }
+
+}  

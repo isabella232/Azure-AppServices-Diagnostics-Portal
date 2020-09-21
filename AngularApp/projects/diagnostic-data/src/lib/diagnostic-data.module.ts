@@ -4,6 +4,7 @@ import { DetectorControlService } from './services/detector-control.service';
 import { DiagnosticService } from './services/diagnostic.service';
 import { GenericSupportTopicService } from './services/generic-support-topic.service';
 import { GenericContentService } from './services/generic-content.service';
+import { GenericDocumentsSearchService } from './services/generic-documents-search.service';
 import { TelemetryService } from './services/telemetry/telemetry.service';
 import { GenieGlobals } from './services/genie.service';
 import { NvD3Module } from 'ng2-nvd3';
@@ -91,14 +92,15 @@ import { CXPChatService } from './services/cxp-chat.service';
 import { CxpChatLauncherComponent } from './components/cxp-chat-launcher/cxp-chat-launcher.component';
 import { AppInsightsEnablementComponent } from './components/app-insights-enablement/app-insights-enablement.component';
 import { ConnectAppInsightsComponent } from './components/connect-app-insights/connect-app-insights.component';
-import {DetectorSearchComponent} from './components/detector-search/detector-search.component';
-import {WebSearchComponent} from './components/web-search/web-search.component';
-import {RenderFilterPipe} from './components/detector-view/detector-view.component';
+import { DetectorSearchComponent } from './components/detector-search/detector-search.component';
+import { WebSearchComponent } from './components/web-search/web-search.component';
+import { RenderFilterPipe } from './components/detector-view/detector-view.component';
 import { DynamicInsightV4Component } from './components/dynamic-insight-v4/dynamic-insight-v4.component';
 import { InViewportModule } from "ng-in-viewport";
 import { ParseResourceService } from './services/parse-resource.service';
 import { MarkdownTextComponent } from './components/markdown-text/markdown-text.component';
 import { DataTableV4Component } from './components/data-table-v4/data-table-v4.component';
+import { DocumentsSearchComponent } from './components/documents-search/documents-search.component';
 
 @NgModule({
   imports: [
@@ -152,7 +154,8 @@ import { DataTableV4Component } from './components/data-table-v4/data-table-v4.c
     RenderFilterPipe,
     DynamicInsightV4Component,
     MarkdownTextComponent,
-    DataTableV4Component
+    DataTableV4Component,
+    DocumentsSearchComponent
   ],
   entryComponents: [DetectorListAnalysisComponent],
   exports: [
@@ -181,6 +184,7 @@ export class DiagnosticDataModule {
         DiagnosticService,
         GenericSupportTopicService,
         GenericContentService,
+        GenericDocumentsSearchService,
         { provide: DIAGNOSTIC_DATA_CONFIG, useValue: config },
         CXPChatService,
         KustoTelemetryService,
