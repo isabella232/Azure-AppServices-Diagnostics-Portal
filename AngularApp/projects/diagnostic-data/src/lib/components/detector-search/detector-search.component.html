@@ -168,7 +168,13 @@
     </div>
 </div>
 <div style="margin-left:20px;margin-top:20px;" *ngIf="searchConfiguration.WebSearchEnabled">
-    <web-search [searchTerm]="searchTerm" [searchId]="searchId" [isChildComponent]="true" [(searchResults)]="webSearchResults" [webSearchConfig]="searchConfiguration.WebSearchConfiguration"></web-search>
+    <web-search [searchTerm]="searchTerm"
+                [searchId]="searchId" 
+                [isChildComponent]="true" 
+                [(searchResults)]="webSearchResults" 
+                [webSearchConfig]="searchConfiguration.WebSearchConfiguration"
+                [numArticlesExpanded] = 2>
+    </web-search>
 </div>
 
 <div style="margin-left:20px;margin-top:20px;" *ngIf="searchConfiguration.WebSearchEnabled">
