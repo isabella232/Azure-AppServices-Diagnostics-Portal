@@ -19,7 +19,7 @@
       (click)="toggleOpenState()" data-track-type="run"></fab-command-bar-item>
     <fab-command-bar-item key="refresh1" text="Refresh" [iconProps]="{ iconName: 'Refresh' }" (click)="refreshPage()">
     </fab-command-bar-item>
-    <fab-command-bar-item key="sendFeedback" text="Feedback" [iconProps]="{ iconName: 'Emoji2' }"
+    <fab-command-bar-item key="sendFeedback" [text]="feedbackText" [iconProps]="feedbackIconProp"
       (click)="sendFeedback()"></fab-command-bar-item>
   </items>
 

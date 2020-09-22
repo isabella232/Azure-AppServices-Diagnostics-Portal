@@ -44,7 +44,7 @@ export class FabricFeedbackComponent implements AfterViewInit {
   resourceUri: string = "";
   constructor(protected telemetryService: TelemetryService, public globals: Globals, private _http: HttpClient, private resourceService: ResourceService) {
     this.resourceUri = this.resourceService.resourceIdForRouting;
-    this.getFeedbacks().subscribe(feedbacks => {
+    this.globals.getFeedbacks().subscribe(feedbacks => {
       this.feedbacks = feedbacks;
     })
   }
@@ -108,6 +108,7 @@ export class FabricFeedbackComponent implements AfterViewInit {
   dismissedHandler() {
     this.globals.openFeedback = false;
     this.reset();
+    this.globals.updateLastReadFeedback(this.feedbacks);
   }
 
   getFeedbacks() {
