@@ -157,7 +157,6 @@ export class DocumentsSearchComponent extends DataRenderBaseComponent  implement
           }));
     
     this.showPreLoader = true;
-    console.log(this.searchId);
     searchTask.subscribe(
       (results) => {
         this.showPreLoader = false;
@@ -169,7 +168,6 @@ export class DocumentsSearchComponent extends DataRenderBaseComponent  implement
           
             this.searchTermDisplay = this.searchTerm.valueOf();
             this.showSearchTermPractices = true;
-            console.log("showing best practices")
             
         }
 
