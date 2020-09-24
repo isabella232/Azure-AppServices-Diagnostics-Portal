@@ -108,13 +108,15 @@ export class CategoryNavComponent implements OnInit {
     }
 
     getCurrentItemId() {
-        if (!this._activatedRoute.firstChild.snapshot.params['analysisId']) {
-            if (this._activatedRoute.firstChild.snapshot.params['detectorName']) {
-                this.currentDetectorId = this._activatedRoute.firstChild.snapshot.params['detectorName'];
+        if (this._activatedRoute && this._activatedRoute.firstChild && this._activatedRoute.firstChild.snapshot) {
+            if (!this._activatedRoute.firstChild.snapshot.params['analysisId']) {
+                if (this._activatedRoute.firstChild.snapshot.params['detectorName']) {
+                    this.currentDetectorId = this._activatedRoute.firstChild.snapshot.params['detectorName'];
+                }
             }
-        }
-        else {
-            this.currentDetectorId = this._activatedRoute.firstChild.snapshot.params['analysisId'];
+            else {
+                this.currentDetectorId = this._activatedRoute.firstChild.snapshot.params['analysisId'];
+            }
         }
     }
 

@@ -246,6 +246,11 @@ export class DetectorViewComponent implements OnInit {
 
         if (this.isAnalysisView) {
           let downTime = data.dataset.find(set => (<Rendering>set.renderingProperties).type === RenderingType.DownTime);
+          if(this.isInCaseSubmission())
+          {
+            //Disable downtimes in case submission
+            downTime = null;
+          }
           if (!!downTime) {
             this.zoomBehavior = zoomBehaviors.CancelZoom | zoomBehaviors.FireXAxisSelectionEvent;
             this.supportsDownTime = true;

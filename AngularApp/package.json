@@ -54,7 +54,7 @@
     "hammerjs": "^2.0.8",
     "highcharts": "^8.1.2",
     "highcharts-angular": "^2.4.0",
-    "highcharts-custom-events": "^2.2.2",
+    "highcharts-custom-events": "^3.0.9",
     "ie-shim": "^0.1.0",
     "jquery": "^3.4.1",
     "moment": "^2.22.1",

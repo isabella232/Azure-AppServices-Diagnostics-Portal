@@ -13,7 +13,7 @@
                 "Xenon": "assets/img/WebAppForContainers.svg"
             },
             "searchSuffix": "AZURE WEB APP",
-            "emergingIssuesICMLookupEnabled": true
+            "emergingIssuesICMLookupEnabled": false
         },
         {
             "service": "AseService",
@@ -25,7 +25,7 @@
             "pesId": "16533",
             "staticSelfHelpContent": "microsoft.ase",
             "searchSuffix": "AZURE APP SERVICE ENVIRONMENT",
-            "emergingIssuesICMLookupEnabled": true
+            "emergingIssuesICMLookupEnabled": false
         },
         {
             "service": "ResourceService",

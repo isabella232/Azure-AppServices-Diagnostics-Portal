@@ -41,7 +41,7 @@ export class CollapsibleMenuItemComponent {
       this.searchValueLocal = searchValue;
       this.menuItem.expanded = searchValue != undefined;
       this.hasChildren = this.menuItem.subItems ? this._searchPipe.transform(this.menuItem.subItems, searchValue).length > 0 : false;
-      this.matchesSearchTerm = !this.searchValueLocal || this.menuItem.label.toLowerCase().indexOf(this.searchValueLocal.toLowerCase()) >= 0 || this.menuItem.id.toLowerCase().indexOf(this.searchValueLocal.toLowerCase()) >= 0 || this.hasChildren;
+      this.matchesSearchTerm = !this.searchValueLocal || this.menuItem.label.toLowerCase().indexOf(this.searchValueLocal.toLowerCase()) >= 0 || this.menuItem.id.toLowerCase().indexOf(this.searchValueLocal.toLowerCase()) >= 0 || this.menuItem.metadata && this.menuItem.metadata.toLowerCase().indexOf(this.searchValueLocal.toLowerCase()) >= 0 || this.hasChildren;
     });
   }
 
@@ -74,15 +74,17 @@ export class CollapsibleMenuItemComponent {
 export class CollapsibleMenuItem {
   label: string;
   id: string;
+  metadata?: string;
   onClick: Function;
   expanded: boolean = false;
   subItems: CollapsibleMenuItem[];
   isSelected: Function;
   icon: string;
 
-  constructor(label: string, id: string, onClick: Function, isSelected: Function, icon: string = null, expanded: boolean = false, subItems: CollapsibleMenuItem[] = []) {
+  constructor(label: string, id: string, onClick: Function, isSelected: Function, icon: string = null, expanded: boolean = false, subItems: CollapsibleMenuItem[] = [], metadata: string = null) {
     this.label = label;
     this.id = id;
+    this.metadata = metadata;
     this.onClick = onClick;
     this.expanded = expanded;
     this.subItems = subItems;

@@ -86,10 +86,7 @@ export class WebSearchComponent extends DataRenderBaseComponent implements OnIni
             );
         }
         this.resetGlobals();
-        if (!this.isChildComponent || !this.searchId || this.searchId.length <1 ) 
-            this.searchId = uuid();
-        
-    
+        if (!this.isChildComponent || !this.searchId || this.searchId.length <1) this.searchId = uuid();
         let searchTask = this._contentService.searchWeb(this.searchTerm, this.webSearchConfig.MaxResults.toString(), this.webSearchConfig.UseStack, this.webSearchConfig.PreferredSites).pipe(map((res) => res), retryWhen(errors => {
             let numRetries = 0;
             return errors.pipe(delay(1000), map(err => {

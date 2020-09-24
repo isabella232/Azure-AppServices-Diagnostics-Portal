@@ -238,14 +238,35 @@ export class DetectorListAnalysisComponent extends DataRenderBaseComponent imple
         }
     }
 
+    isInCaseSubmission(): boolean {
+        return !!this._supportTopicService && !!this._supportTopicService.supportTopicId && this._supportTopicService.supportTopicId != '';
+    }
+
+    getQueryParamsForAnalysisDetector():string {
+        let allRouteQueryParams = this._activatedRoute.snapshot.queryParams;
+        let additionalQueryString = '';
+        let knownQueryParams = ['startTime', 'endTime'];
+        let queryParamsToSkipForAnalysisDetectors = ['startTimeChildDetector', 'endTimeChildDetector'];
+        Object.keys(allRouteQueryParams).forEach(key => {
+            if (knownQueryParams.indexOf(key) < 0) {
+                if (queryParamsToSkipForAnalysisDetectors.indexOf(key) < 0) {
+                    additionalQueryString += `&${key}=${encodeURIComponent(allRouteQueryParams[key])}`;
+                }
+            }
+        });
+        return additionalQueryString;
+    }
+
     analysisContainsDowntime(): Observable<boolean> {
         if (this.analysisId === 'searchResultsAnalysis') {
             return of(false);
         }
-        return this._diagnosticService.getDetector(this.analysisId, this._detectorControl.startTimeString, this._detectorControl.endTimeString).pipe(
+        return this._diagnosticService.getDetector(this.analysisId, this._detectorControl.startTimeString, this._detectorControl.endTimeString, 
+            false, this._detectorControl.isInternalView, this.getQueryParamsForAnalysisDetector()).pipe(
             map((response: DetectorResponse) => {
                 let downTimeRenderingType = response.dataset.find(set => (<Rendering>set.renderingProperties).type === RenderingType.DownTime);
-                if (!!downTimeRenderingType) {
+                if (!!downTimeRenderingType && !this.isInCaseSubmission()) {
+                    //Allow downtimes only when not in case submission.
                     return true;
                 }
                 else {
@@ -299,7 +320,8 @@ export class DetectorListAnalysisComponent extends DataRenderBaseComponent imple
                         }
                         else {
                             // Add application insights analysis data
-                            this._diagnosticService.getDetector(this.analysisId, this._detectorControl.startTimeString, this._detectorControl.endTimeString)
+                            this._diagnosticService.getDetector(this.analysisId, this._detectorControl.startTimeString, this._detectorControl.endTimeString, 
+                                false, this._detectorControl.isInternalView, this.getQueryParamsForAnalysisDetector())
                                 .subscribe((response: DetectorResponse) => {
                                     this.checkSearchEmbedded(response);
                                     this.getApplicationInsightsData(response);

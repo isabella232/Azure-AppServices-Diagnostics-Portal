@@ -1,19 +1,18 @@
 import * as momentNs from 'moment';
 import { Component, Input, OnInit, HostListener, ElementRef, Output, EventEmitter } from '@angular/core';
 import { TimeSeriesType } from '../../models/detector';
-import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
-import * as HC_customEvents_ from 'highcharts-custom-events';
 import AccessibilityModule from 'highcharts/modules/accessibility';
 import { DetectorControlService } from '../../services/detector-control.service';
 import { HighChartTimeSeries } from '../../models/time-series';
 import { xAxisPlotBand, xAxisPlotBandStyles, zoomBehaviors, XAxisSelection } from '../../models/time-series';
 import { KeyValue } from '@angular/common';
 
-const HC_customEvents = HC_customEvents_;
+declare var require: any
+var Highcharts = require('highcharts'),
+HighchartsCustomEvents = require('highcharts-custom-events')(Highcharts);
 HC_exporting(Highcharts);
 AccessibilityModule(Highcharts);
-HC_customEvents(Highcharts);
 
 const moment = momentNs;
 

@@ -65,6 +65,10 @@ export class MessageProcessor {
             }
         }
 
+        if (!this._currentMessageGroup) {
+            return null;
+        }
+
         if (this._currentMessageIterator >= this._currentMessageGroup.messages.length) {
             if (this._currentMessageGroup.next_key === undefined) {
                 return null;
@@ -80,10 +84,6 @@ export class MessageProcessor {
             this._currentKey = nextKey;
 
             this._currentMessageGroup = this._getMessageGroupByKey(this._currentKey);
-        }
-
-        if (!this._currentMessageGroup) {
-            return null;
         }
 
         const nextMessage: Message = this._currentMessageGroup.messages[this._currentMessageIterator];
