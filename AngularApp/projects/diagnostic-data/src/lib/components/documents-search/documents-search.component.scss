@@ -40,10 +40,11 @@ a{
 }
 
 .article {
-    border: 1px solid #dddddd;
+    border: 1px solid #bbbbbb;
     cursor: pointer;
-    padding:10px;
-    margin-right: 10px;
+    padding: 10px;
+    background-color: white;
+    margin: 10px 0px;
 }
 
 .article > h5 {
@@ -58,4 +59,8 @@ a{
     color:black;
     font-weight: bold;
     margin-bottom:5px;
+}
+
+label {
+    margin-left: 6px;
 }
