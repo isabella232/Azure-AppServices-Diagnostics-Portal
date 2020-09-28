@@ -32,11 +32,12 @@
               [hidden]="(!isPublic || i < numDocumentsExpanded ) ? false : !viewRemainingDocuments" 
               (click)="selectResult(document)" tabindex="0" 
               (keyup.enter)="selectResult(document)" >
-          <a>{{document.title}}
+          <a>{{ limitTextCharacters(document.title, 100 )}}
             <i class="fa fa-external-link"></i>
           </a>
           <div class="article-link">{{getLinkText(document.url)}}  </div>
-          <div [innerHtml] = "document.description" >  </div>
+          
+          <div [innerHtml] = "limitTextCharacters(document.description,300)" >  </div>
         </div>
       </div>
 

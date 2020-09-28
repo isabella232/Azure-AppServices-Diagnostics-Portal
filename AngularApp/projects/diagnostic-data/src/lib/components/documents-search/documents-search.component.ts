@@ -246,5 +246,10 @@ export class DocumentsSearchComponent extends DataRenderBaseComponent  implement
     });
   }
 
+  limitTextCharacters (text : string,  numChars : number) 
+  {
+    return text.length<numChars? text :  text.substring(0, numChars) + "...";
+  }
+
 
 }

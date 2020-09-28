@@ -10,6 +10,7 @@ import { GenericContentService } from '../../services/generic-content.service';
 import { of, Observable } from 'rxjs';
 import { ISubscription } from "rxjs/Subscription";
 import { WebSearchConfiguration } from '../../models/search';
+import { GenericDocumentsSearchService } from '../../services/generic-documents-search.service';
 
 @Component({
     selector: 'web-search',
@@ -20,6 +21,7 @@ import { WebSearchConfiguration } from '../../models/search';
 export class WebSearchComponent extends DataRenderBaseComponent implements OnInit {
     isPublic: boolean = false;
     viewRemainingArticles : boolean = false;
+    deepSearchEnabled : boolean = false;
     @Input() searchTerm: string = '';
     @Input() searchId: string = '';
     @Input() isChildComponent: boolean = true;
@@ -36,7 +38,8 @@ export class WebSearchComponent extends DataRenderBaseComponent implements OnIni
     subscription: ISubscription;
     
     constructor(@Inject(DIAGNOSTIC_DATA_CONFIG) config: DiagnosticDataConfig, public telemetryService: TelemetryService,
-        private _activatedRoute: ActivatedRoute, private _router: Router, private _contentService: GenericContentService) {
+        private _activatedRoute: ActivatedRoute, private _router: Router, private _contentService: GenericContentService,
+        private _documentsSearchService : GenericDocumentsSearchService,) {
         super(telemetryService);
         this.isPublic = config && config.isPublic;
         const subscription = this._activatedRoute.queryParamMap.subscribe(qParams => {
@@ -58,6 +61,7 @@ export class WebSearchComponent extends DataRenderBaseComponent implements OnIni
     }
 
     refresh() {
+        this.checkIfDeepSearchIsEnabled ()
         if (this.searchTerm && this.searchTerm.length > 1) {
             setTimeout(()=> {this.triggerSearch();}, 500);
         }
@@ -165,5 +169,37 @@ export class WebSearchComponent extends DataRenderBaseComponent implements OnIni
     showRemainingArticles(){
         this.viewRemainingArticles =!this.viewRemainingArticles
       }
+    
+    checkIfDeepSearchIsEnabled () {
+    let checkStatusTask = this._documentsSearchService
+                            .IsEnabled()
+                            .pipe( map((res) => res), 
+                                retryWhen(errors => {
+                                let numRetries = 0;
+                                return errors.pipe(delay(1000), map(err => {
+                                    if(numRetries++ === 3){
+                                        throw err;
+                                    }
+                                    return err;
+                                    }));
+                                }), 
+                                catchError(e => {
+                                    this.handleRequestFailure();
+                                    return Observable.throw(e);
+                                })
+                                );
+    this.showPreLoader = true;
+    checkStatusTask.subscribe(
+        (status) => {   this.deepSearchEnabled = status;
+                    },
+        (err) => {  this.logEvent(TelemetryEventNames.DeepSearchResults, { 
+                    operationStatus: "failed",
+                    error: JSON.stringify(err), 
+                    ts: Math.floor((new Date()).getTime() / 1000).toString() 
+                });
+
+                });
+    
+    }
 
 }  

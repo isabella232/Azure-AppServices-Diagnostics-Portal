@@ -24,11 +24,13 @@
             <li>Try more general keywords.</li>
         </ul>
     </div>
+
     <div *ngIf="searchResults && searchResults.length>0">
         <div class="article-container">
           <div class="article-heading" tabindex="0">Here are some documents from the web that might help you</div>
           <div *ngFor="let article of searchResults;let i =index" >
-            <div  [hidden]="i < numArticlesExpanded  ? false : !viewRemainingArticles" 
+            <!--if deepSearchEnabled = false, hidden = false -->
+            <div  [hidden]="( !deepSearchEnabled || i < numArticlesExpanded ) ? false : !viewRemainingArticles" 
                 class="article" 
                 (click)="selectResult(article)" 
                 tabindex="0" 
@@ -41,7 +43,9 @@
             </div>
           </div>
 
-          <a    (click)="showRemainingArticles()"> 
+          <!--Anchor tag should be displayed only if deep search is enabled-->
+          <a  *ngIf="deepSearchEnabled"
+                (click)="showRemainingArticles()"> 
                 {{viewOrHideAnchorTagText(viewRemainingArticles , searchResults.length , numArticlesExpanded )}}   
           </a>
     
