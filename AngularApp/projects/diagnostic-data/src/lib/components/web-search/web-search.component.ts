@@ -188,7 +188,6 @@ export class WebSearchComponent extends DataRenderBaseComponent implements OnIni
                                     return Observable.throw(e);
                                 })
                                 );
-    this.showPreLoader = true;
     checkStatusTask.subscribe(
         (status) => {   this.deepSearchEnabled = status;
                     },
