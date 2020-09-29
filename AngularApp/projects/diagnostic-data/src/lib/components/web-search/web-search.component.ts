@@ -44,6 +44,7 @@ export class WebSearchComponent extends DataRenderBaseComponent implements OnIni
         this.isPublic = config && config.isPublic;
         const subscription = this._activatedRoute.queryParamMap.subscribe(qParams => {
             this.searchTerm = qParams.get('searchTerm') === null ? "" || this.searchTerm : qParams.get('searchTerm');
+            this.checkIfDeepSearchIsEnabled ();
             this.refresh();
         });
         this.subscription = subscription;
@@ -61,7 +62,6 @@ export class WebSearchComponent extends DataRenderBaseComponent implements OnIni
     }
 
     refresh() {
-        this.checkIfDeepSearchIsEnabled ()
         if (this.searchTerm && this.searchTerm.length > 1) {
             setTimeout(()=> {this.triggerSearch();}, 500);
         }
@@ -184,7 +184,7 @@ export class WebSearchComponent extends DataRenderBaseComponent implements OnIni
                                     }));
                                 }), 
                                 catchError(e => {
-                                    this.handleRequestFailure();
+                                    this.deepSearchEnabled = false;
                                     return Observable.throw(e);
                                 })
                                 );
@@ -192,11 +192,7 @@ export class WebSearchComponent extends DataRenderBaseComponent implements OnIni
     checkStatusTask.subscribe(
         (status) => {   this.deepSearchEnabled = status;
                     },
-        (err) => {  this.logEvent(TelemetryEventNames.DeepSearchResults, { 
-                    operationStatus: "failed",
-                    error: JSON.stringify(err), 
-                    ts: Math.floor((new Date()).getTime() / 1000).toString() 
-                });
+        () => {  this.deepSearchEnabled = false;
 
                 });
     
