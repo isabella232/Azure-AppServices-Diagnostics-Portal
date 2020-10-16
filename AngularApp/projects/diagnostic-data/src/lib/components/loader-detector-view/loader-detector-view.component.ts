@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FabSpinnerComponent } from '@angular-react/fabric';
+import { TelemetryEventNames } from '../../services/telemetry/telemetry.common';
+import { TelemetryService } from '../../services/telemetry/telemetry.service';
+import { Guid } from '../../utilities/guid';
 
 @Component({
     selector: 'loader-detector-view',
@@ -14,6 +17,11 @@ export class LoaderDetectorViewComponent implements OnInit {
     delay: number = 2000;
     timer: any = 0;
     i: number = 0;
+    startLoadingTimeInMilliSeconds: any;
+    endLoadingTimeInMilliSeconds: any;
+    duration: any;
+    trackingEventId: any;
+
     loadingStages: LoadingStage[] = [
         {
             duration: 2000,
@@ -37,10 +45,11 @@ export class LoaderDetectorViewComponent implements OnInit {
         }
     ];
 
-    constructor() {
+    constructor(private telemetryService: TelemetryService) {
     }
 
     ngOnInit() {
+        this.trackingEventId = Guid.newGuid();
         this.loading();
     }
 
@@ -67,6 +76,16 @@ export class LoaderDetectorViewComponent implements OnInit {
 
     ngOnDestroy() {
         window.clearTimeout(this.timer);
+        this.endLoadingTimeInMilliSeconds = Date.now();
+        let endLoadingTimeISOString = new Date().toISOString();
+        this.duration = this.endLoadingTimeInMilliSeconds - this.startLoadingTimeInMilliSeconds;
+        this.telemetryService.logEvent(TelemetryEventNames.LoadingDetectorViewEnded, { "TrackingEventId": this.trackingEventId, "EndLoadingTime": endLoadingTimeISOString, "Duration": this.duration });
+    }
+
+    ngAfterViewInit() {
+        this.startLoadingTimeInMilliSeconds = Date.now();
+        let startLoadingTimeISOString = new Date().toISOString();
+        this.telemetryService.logEvent(TelemetryEventNames.LoadingDetectorViewStarted, { "TrackingEventId": this.trackingEventId, "StartLoadingTime": startLoadingTimeISOString });
     }
 }
 

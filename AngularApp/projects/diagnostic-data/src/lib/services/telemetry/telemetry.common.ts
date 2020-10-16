@@ -65,7 +65,9 @@ export const TelemetryEventNames = {
     DowntimeListPassedByDetector: 'DowntimePassedByDetector',
     CrashMonitoringEnabled: 'CrashMonitoringEnabled',
     CrashMonitoringStopped: 'CrashMonitoringStopped',
-    CrashMonitoringAgentDisabled: 'CrashMonitoringAgentDisabled'
+    CrashMonitoringAgentDisabled: 'CrashMonitoringAgentDisabled',
+    LoadingDetectorViewStarted: 'LoadingDetectorViewStarted',
+    LoadingDetectorViewEnded: 'LoadingDetectorViewEnded'
 };
 
 export interface TelemetryPayload {
