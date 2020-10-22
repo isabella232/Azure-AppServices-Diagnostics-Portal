@@ -14,7 +14,7 @@ export class WebSiteFilter implements PipeTransform {
             .filter(item =>
                 (item.appType & this._webSiteService.appType) > 0 &&
                 (item.platform & this._webSiteService.platform) > 0 &&
-                (item.sku == Sku.All || item.sku & this._webSiteService.sku) > 0 &&
+                (item.sku === Sku.All || item.sku === Sku.NotDynamic && this._webSiteService.sku != Sku.Dynamic || item.sku & this._webSiteService.sku) > 0 &&
                 (item.hostingEnvironmentKind & this._webSiteService.hostingEnvironmentKind) > 0 &&
                 (item.stack === ''
                     || (overrideStack && (overrideStack === '' || overrideStack.toLowerCase() === 'all'))
