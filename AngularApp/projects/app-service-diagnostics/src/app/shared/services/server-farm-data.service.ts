@@ -64,7 +64,7 @@ export class ServerFarmDataService {
 
     private addAdditionalProperties(serverFarm: ServerFarm): ServerFarm {
         if (serverFarm) {
-            const sizeId = serverFarm.sku.name.replace(serverFarm.sku.family, '');
+            const sizeId = serverFarm.sku ? serverFarm.sku.name.replace(serverFarm.sku.family, '') : "";
             switch (sizeId) {
                 case '1':
                     serverFarm.additionalProperties = {
@@ -86,7 +86,7 @@ export class ServerFarmDataService {
                     break;
             }
 
-            if (serverFarm.sku.family.toLowerCase() === 'p1') {
+            if (serverFarm.sku && serverFarm.sku.family.toLowerCase() === 'p1') {
                 serverFarm.additionalProperties.cores *= 2;
                 serverFarm.additionalProperties.ramInGB *= 2;
             }
