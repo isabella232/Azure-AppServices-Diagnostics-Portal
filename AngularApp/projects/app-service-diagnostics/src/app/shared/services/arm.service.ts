@@ -411,7 +411,7 @@ export class ArmService {
                 actualError = 'Server Error';
             }
             loggingProps['url'] = error.url;
-            loggingProps['status'] = error.status.toString();
+            loggingProps['status'] = `${error.status}`;
             loggingProps['statusText'] = error.statusText;
         }
 
