@@ -51,14 +51,14 @@
         },
         {
             "service": "ResourceService",
-            "resourceType": "Microsoft.RedHatOpenShift/openShiftManagedClusters",
+            "resourceType": "Microsoft.ContainerService/openShiftManagedClusters",
             "templateFileName": "OpenShiftManagedClusters",
             "imgSrc": "assets/img/Azure-KubernetesService-Logo.png",
             "versionPrefix": "",
             "azureCommImpactedServicesList": "openShiftManagedClusters",
             "pesId": "",
             "staticSelfHelpContent": "",
-            "searchSuffix": "AZURE RED HAT OPENSHIFT CLUSTER"
+            "searchSuffix": "AZURE KUBERNETES CLUSTER"
         },
         {
             "service": "ResourceService",
