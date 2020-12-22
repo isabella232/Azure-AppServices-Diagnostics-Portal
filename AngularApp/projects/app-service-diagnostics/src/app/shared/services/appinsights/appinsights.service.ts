@@ -61,7 +61,7 @@ export class AppInsightsService {
         this.applicationInsightsValidForApp = new BehaviorSubject<boolean>(null);
 
         this.authService.getStartupInfo().subscribe((startupInfo: StartupInfo) => {
-            if (startupInfo.resourceType === ResourceType.Site) {
+            if (startupInfo.resourceType === ResourceType.Site && startupInfo.resourceId.toLowerCase().includes("/providers/microsoft.web/")) {
                 this.postCommandToGetAIResource(startupInfo.resourceId);
 
                 const resourceUriParts = siteService.parseResourceUri(startupInfo.resourceId);

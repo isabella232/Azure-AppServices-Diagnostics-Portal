@@ -27,7 +27,7 @@ export class SiteService {
         private _uriElementsService: UriElementsService, private _serverFarmService: ServerFarmDataService) {
         this._authService.getStartupInfo().subscribe((startUpInfo: StartupInfo) => {
             this._populateSiteInfo(startUpInfo.resourceId);
-            if (startUpInfo.resourceType === ResourceType.Site) {
+            if (startUpInfo.resourceType === ResourceType.Site && startUpInfo.resourceId.toLowerCase().includes("/providers/microsoft.web/")) {
                 this._armClient.getResource<Site>(startUpInfo.resourceId).subscribe((site: ResponseMessageEnvelope<Site>) => {
 
                     this.currentSiteStatic = site.properties;

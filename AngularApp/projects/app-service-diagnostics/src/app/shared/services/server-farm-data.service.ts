@@ -30,7 +30,7 @@ export class ServerFarmDataService {
             .subscribe((startUpInfo: StartupInfo) => {
                 if (!startUpInfo) { return; }
                 this.siteResourceId = startUpInfo.resourceId;
-                if (startUpInfo.resourceType === ResourceType.Site) {
+                if (startUpInfo.resourceType === ResourceType.Site && startUpInfo.resourceId.toLowerCase().includes("/providers/microsoft.web/")) {
                     return this._armService.getResource<Site>(this.siteResourceId).pipe(
                         mergeMap((site: ResponseMessageEnvelope<Site>) => {
                             this.currentSite = site.properties;

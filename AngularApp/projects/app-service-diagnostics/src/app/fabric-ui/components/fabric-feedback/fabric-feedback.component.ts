@@ -4,7 +4,6 @@ import { TelemetryService, TelemetryEventNames, PIIUtilities, TelemetrySource } 
 import { Globals } from '../../../globals';
 import { ActivatedRoute } from '@angular/router';
 import * as momentNs from 'moment';
-import { SiteService } from '../../../shared/services/site.service';
 import { Guid } from '../../../shared/utilities/guid';
 
 
@@ -47,7 +46,7 @@ export class FabricFeedbackComponent implements AfterViewInit, OnInit,OnDestroy 
     }
   }
   currentTime: string = "";
-  constructor(protected telemetryService: TelemetryService, public globals: Globals, private activatedRoute: ActivatedRoute,private siteService:SiteService) { }
+  constructor(protected telemetryService: TelemetryService, public globals: Globals, private activatedRoute: ActivatedRoute) { }
 
   submitFeedback() {
     const eventProps = {
